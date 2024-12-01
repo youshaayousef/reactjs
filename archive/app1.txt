@@ -1,0 +1,183 @@
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+
+// function App() {
+//   const [user, setUser] = useState(null);
+//   const [token, setToken] = useState(null);
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   const [isRegistering, setIsRegistering] = useState(false);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const storedToken = localStorage.getItem("token");
+//     const storedUser = localStorage.getItem("user");
+
+//     if (storedToken && storedUser) {
+//       try {
+//         setToken(storedToken);
+//         setUser(JSON.parse(storedUser));
+//         setIsLoggedIn(true);
+//       } catch (error) {
+//         console.error("Error parsing user data:", error);
+//       }
+//     }
+//   }, []);
+
+//   const handleLogin = async (e) => {
+//     e.preventDefault();
+//     const username = e.target.username.value;
+//     const password = e.target.password.value;
+
+//     try {
+//       const response = await axios.post("http://127.0.0.1:8000/api/token/", {
+//         username: username,
+//         password: password,
+//       });
+
+//       setToken(response.data.token);
+//       setUser({ id: response.data.user_id, username: response.data.username });
+//       localStorage.setItem("token", response.data.token);
+//       localStorage.setItem(
+//         "user",
+//         JSON.stringify({
+//           id: response.data.user_id,
+//           username: response.data.username,
+//         })
+//       );
+//       setIsLoggedIn(true);
+//     } catch (error) {
+//       console.error("Login failed:", error);
+//     }
+//   };
+
+//   const handleRegister = async (e) => {
+//     e.preventDefault();
+//     const username = e.target.username.value;
+//     const password = e.target.password.value;
+//     const email = e.target.email.value;
+
+//     try {
+//       await axios.post("http://127.0.0.1:8000/api/users/", {
+//         username: username,
+//         password: password,
+//         email: email,
+//       });
+//       setIsRegistering(false);
+//       alert("Registration successful! You can now log in.");
+//     } catch (error) {
+//       console.error("Registration failed:", error);
+//       setError("Registration failed. Please try again.");
+//     }
+//   };
+
+//   const handleLogout = () => {
+//     setToken(null);
+//     setUser(null);
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("user");
+//     setIsLoggedIn(false);
+//   };
+
+//   const getProtectedData = async () => {
+//     try {
+//       const response = await axios.get("http://127.0.0.1:8000/api/protected/", {
+//         headers: {
+//           Authorization: `Token ${token}`, // Fix: Wrap the token value in backticks
+//         },
+//       });
+//       console.log(response.data);
+//     } catch (error) {
+//       console.error("Error fetching protected data:", error);
+//     }
+//   };
+
+//   return (
+//     <div className="app">
+//       <h1>Authentication Example</h1>
+//       {!isLoggedIn ? (
+//         <>
+//           <form onSubmit={handleLogin}>
+//             <input type="text" name="username" placeholder="Username" />
+//             <input type="password" name="password" placeholder="Password" />
+//             <button type="submit">Login</button>
+//           </form>
+//           <form onSubmit={handleRegister}>
+//             <input
+//               type="text"
+//               name="username"
+//               placeholder="Username"
+//               required
+//             />
+//             <input type="email" name="email" placeholder="Email" required />
+//             <input
+//               type="password"
+//               name="password"
+//               placeholder="Password"
+//               required
+//             />
+//             <button type="submit">Register</button>
+//             <button type="button" onClick={() => setIsRegistering(false)}>
+//               Cancel
+//             </button>
+//           </form>
+//         </>
+//       ) : (
+//         <div>
+//           <p>Welcome, {user.username}!</p>
+//           <button onClick={handleLogout}>Logout</button>
+//           <button onClick={getProtectedData}>Get Protected Data</button>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default App;
+
+// // import React, { useState, useEffect } from 'react';
+// // function App() {
+// //   return(
+// //     <>
+// //     hello
+// //     </>
+// //   );
+// // }
+// // export default App;
+
+<nav>
+          <ul>
+            {isLoggedIn ? (
+              <>
+                <li>
+                  <Link className=" nav-link" to="/">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link" to="/logout">
+                    Logout
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link" to="/change_password">
+                    Change Password
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link className="nav-link" to="/login">
+                    <i className="bi bi-search"></i>Login
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link" to="/register">
+                    <i className="bi bi-star"></i>Register
+                  </Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
